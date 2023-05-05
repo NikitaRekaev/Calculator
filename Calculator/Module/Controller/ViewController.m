@@ -1,13 +1,13 @@
-//  HomeView.m
+//  ViewController.m
 //  Nikita Rekaev 28.04.2023
 
-#import "HomeView.h"
+#import "ViewController.h"
 
 #pragma mark - Constants
 
 #define buttonTitles @[@"0", @",", @"=", @"1", @"2", @"3", @"+", @"4", @"5", @"6", @"−", @"7", @"8", @"9", @"×", @"AC", @"±", @"%", @"÷"]
 #define buttonFontSize 36
-#define buttonStandartSize self.frame.size.width / 4.7
+#define buttonStandartSize self.view.frame.size.width / 4.7
 #define buttonSpacing  10
 #define labelFontSize 72
 #define labelPadding 30
@@ -16,7 +16,7 @@
 
 #pragma mark - Interface
 
-@interface HomeView (private)
+@interface ViewController ()
 
 @property (nonatomic, strong) UILabel *outputLabel;
 @property (nonatomic, strong) NSMutableArray *buttons;
@@ -24,19 +24,13 @@
 
 @end
 
-#pragma mark - Implementation
 
-@implementation HomeView
+@implementation ViewController
 
-- (instancetype)initWithFrame:(CGRect)frame {
-    self = [super initWithFrame:frame];
+- (void)viewDidLoad {
+    [super viewDidLoad];
     self.titles = buttonTitles;
-    return self;
-}
-
-- (void)layoutSubviews {
-    [super layoutSubviews];
-    self.backgroundColor = [UIColor blackColor];
+    self.view.backgroundColor = [UIColor blackColor];
     [self configureButtons];
     [self configureOutputLabel];
 }
@@ -44,7 +38,8 @@
 #pragma mark - Actions
 
 - (void)buttonTapped:(UIButton *)sender {
-
+    // Проверка типа кнопки
+    // Вызыв нужного метода
 }
 
 #pragma mark - Configure label
@@ -56,13 +51,13 @@
     self.outputLabel.textColor = [UIColor whiteColor];
     self.outputLabel.textAlignment = NSTextAlignmentRight;
     self.outputLabel.text = buttonTitles.firstObject;
-    [self addSubview: self.outputLabel];
+    [self.view addSubview: self.outputLabel];
     UIButton *lastButton = [self.buttons lastObject];
 
     [NSLayoutConstraint activateConstraints:@[
         [self.outputLabel.bottomAnchor constraintEqualToAnchor: lastButton.topAnchor constant:-labelBottom],
-        [self.outputLabel.leftAnchor constraintEqualToAnchor:self.leftAnchor constant:labelPadding],
-        [self.outputLabel.rightAnchor constraintEqualToAnchor:self.rightAnchor constant:-labelPadding],
+        [self.outputLabel.leftAnchor constraintEqualToAnchor:self.view.leftAnchor constant:labelPadding],
+        [self.outputLabel.rightAnchor constraintEqualToAnchor:self.view.rightAnchor constant:-labelPadding],
         [self.outputLabel.heightAnchor constraintEqualToConstant:labelHeight]
     ]];
 }
@@ -86,13 +81,14 @@
     button.titleLabel.font = [UIFont systemFontOfSize: buttonFontSize];
     button.layer.cornerRadius = buttonStandartSize / 2;
     [button addTarget: self action: @selector(buttonTapped:) forControlEvents: UIControlEventTouchUpInside];
-    [self addSubview:button];
+    [self.view addSubview:button];
     [self.buttons addObject:button];
     [self setColorForButton: button];
     return button;
 }
 
-- (void)setColorForButton:(UIButton *)button {
+- (void)setColorForButton:(UIButton *)button
+{
     [button setTitleColor:[UIColor whiteColor] forState: UIControlStateNormal];
     NSString *title = button.currentTitle;
     if ([title isEqualToString:@"+"] ||
@@ -125,12 +121,13 @@
     [NSLayoutConstraint activateConstraints:@[
         [button.widthAnchor constraintEqualToConstant: buttonWidth],
         [button.heightAnchor constraintEqualToConstant: buttonHeight],
-        [button.bottomAnchor constraintEqualToAnchor: self.bottomAnchor constant: *y],
-        [button.leftAnchor constraintEqualToAnchor: self.leftAnchor constant: *x],
+        [button.bottomAnchor constraintEqualToAnchor: self.view.bottomAnchor constant: *y],
+        [button.leftAnchor constraintEqualToAnchor: self.view.leftAnchor constant: *x],
     ]];
 
     *x += buttonWidth + spacing;
-    if (*x > self.bounds.size.width - buttonHeight - spacing) {
+
+    if (*x > self.view.bounds.size.width - buttonHeight - spacing) {
         *x = spacing;
         *y -= buttonWidth + spacing;
     }

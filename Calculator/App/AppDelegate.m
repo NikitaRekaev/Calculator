@@ -2,7 +2,7 @@
 //  Nikita Rekaev 28.04.2023
 
 #import "AppDelegate.h"
-#import "HomeViewController.h"
+#import "ViewController.h"
 
 @interface AppDelegate ()
 
@@ -18,7 +18,7 @@
 
 - (void)configureUserInterface {
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    self.window.rootViewController = [[HomeViewController alloc] init];
+    self.window.rootViewController = [[ViewController alloc] init];
     [self.window makeKeyAndVisible];
 }
 
