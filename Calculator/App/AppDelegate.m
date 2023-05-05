@@ -2,7 +2,7 @@
 //  Nikita Rekaev 28.04.2023
 
 #import "AppDelegate.h"
-#import "ViewController.h"
+#import "CalculatorBuilder.h"
 
 @interface AppDelegate ()
 
@@ -18,7 +18,7 @@
 
 - (void)configureUserInterface {
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    self.window.rootViewController = [[ViewController alloc] init];
+    self.window.rootViewController = [CalculatorBuilder build];
     [self.window makeKeyAndVisible];
 }
 

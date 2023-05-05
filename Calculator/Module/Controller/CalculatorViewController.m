@@ -1,11 +1,11 @@
-//  ViewController.m
+//  CalculatorViewController.m
 //  Nikita Rekaev 28.04.2023
 
-#import "ViewController.h"
+#import "CalculatorViewController.h"
+
 
 #pragma mark - Constants
 
-#define buttonTitles @[@"0", @",", @"=", @"1", @"2", @"3", @"+", @"4", @"5", @"6", @"−", @"7", @"8", @"9", @"×", @"AC", @"±", @"%", @"÷"]
 #define buttonFontSize 36
 #define buttonStandartSize self.view.frame.size.width / 4.7
 #define buttonSpacing  10
@@ -14,26 +14,37 @@
 #define labelBottom 20
 #define labelHeight 60
 
+
 #pragma mark - Interface
 
-@interface ViewController ()
+@interface CalculatorViewController ()
 
+@property (nonatomic, strong) CalculatorViewModel *viewModel;
 @property (nonatomic, strong) UILabel *outputLabel;
 @property (nonatomic, strong) NSMutableArray *buttons;
-@property (nonatomic, strong) NSArray *titles;
 
 @end
 
 
-@implementation ViewController
+@implementation CalculatorViewController
+
+#pragma mark - Init
+
+- (instancetype)initWithViewModel:(CalculatorViewModel *)viewModel {
+    self.viewModel = viewModel;
+    return self;
+}
+
+
+#pragma mark - Lifecycle
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.titles = buttonTitles;
     self.view.backgroundColor = [UIColor blackColor];
     [self configureButtons];
     [self configureOutputLabel];
 }
+
 
 #pragma mark - Actions
 
@@ -41,6 +52,7 @@
     // Проверка типа кнопки
     // Вызыв нужного метода
 }
+
 
 #pragma mark - Configure label
 
@@ -50,7 +62,7 @@
     self.outputLabel.font = [UIFont systemFontOfSize: labelFontSize];
     self.outputLabel.textColor = [UIColor whiteColor];
     self.outputLabel.textAlignment = NSTextAlignmentRight;
-    self.outputLabel.text = buttonTitles.firstObject;
+    self.outputLabel.text = _viewModel.titles.firstObject;
     [self.view addSubview: self.outputLabel];
     UIButton *lastButton = [self.buttons lastObject];
 
@@ -62,6 +74,7 @@
     ]];
 }
 
+
 #pragma mark - Configure buttons
 
 - (void)configureButtons {
@@ -69,7 +82,7 @@
     CGFloat x = buttonSpacing;
     CGFloat y = -labelPadding;
 
-    for (NSString *title in self.titles) {
+    for (NSString *title in _viewModel.titles) {
         UIButton *button = [self createButton:title];
         [self setConstraintForButton:button x:&x y:&y];
     }
