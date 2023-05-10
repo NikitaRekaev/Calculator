@@ -6,7 +6,6 @@
 
 #pragma mark - Constants
 
-#define buttonFontSize 36
 #define buttonStandartSize self.view.frame.size.width / 4.7
 #define buttonSpacing  10
 #define labelFontSize 72
@@ -19,38 +18,52 @@
 
 @interface CalculatorViewController ()
 
-@property (nonatomic, strong) CalculatorViewModel *viewModel;
 @property (nonatomic, strong) UILabel *outputLabel;
-@property (nonatomic, strong) NSMutableArray *buttons;
+@property (nonatomic, strong) NSMutableArray<CalculatorButton *> *buttons;
 
 @end
 
 
 @implementation CalculatorViewController
 
-#pragma mark - Init
-
-- (instancetype)initWithViewModel:(CalculatorViewModel *)viewModel {
-    self.viewModel = viewModel;
-    return self;
-}
-
-
 #pragma mark - Lifecycle
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    _buttons = [NSMutableArray array];
     self.view.backgroundColor = [UIColor blackColor];
     [self configureButtons];
     [self configureOutputLabel];
+    [_output didLoadView];
+}
+
+#pragma mark - View input
+
+- (void)updateValue:(NSString *)value {
+    _outputLabel.text = value;
 }
 
 
 #pragma mark - Actions
 
-- (void)buttonTapped:(UIButton *)sender {
-    // Проверка типа кнопки
-    // Вызыв нужного метода
+- (void)buttonPressed:(CalculatorButton *)sender {
+    switch (sender.type) {
+        case CalculatorButtonTypeNumber:
+            [_output numberButtonPressed:sender.currentTitle];
+            break;
+        case CalculatorButtonTypeOperation:
+            [_output operatorButtonPressed:sender.currentTitle];
+            break;
+        case CalculatorButtonTypePercent:
+            [_output percentButtonPressed:sender.currentTitle];
+            break;
+        case CalculatorButtonTypeNegate:
+            [_output negateButtonPressed:sender.currentTitle];
+            break;
+        case CalculatorButtonTypeClear:
+            [_output clearButtonPressed:sender.currentTitle];
+            break;
+    }
 }
 
 
@@ -58,12 +71,16 @@
 
 - (void)configureOutputLabel {
     self.outputLabel = [[UILabel alloc] init];
-    self.outputLabel.translatesAutoresizingMaskIntoConstraints = NO;
     self.outputLabel.font = [UIFont systemFontOfSize: labelFontSize];
     self.outputLabel.textColor = [UIColor whiteColor];
     self.outputLabel.textAlignment = NSTextAlignmentRight;
-    self.outputLabel.text = _viewModel.titles.firstObject;
+    self.outputLabel.text = _output.titles.firstObject;
+    [self setConstraintForOutputLabel];
+}
+
+- (void)setConstraintForOutputLabel {
     [self.view addSubview: self.outputLabel];
+    self.outputLabel.translatesAutoresizingMaskIntoConstraints = NO;
     UIButton *lastButton = [self.buttons lastObject];
 
     [NSLayoutConstraint activateConstraints:@[
@@ -78,46 +95,21 @@
 #pragma mark - Configure buttons
 
 - (void)configureButtons {
-    self.buttons = [NSMutableArray array];
     CGFloat x = buttonSpacing;
     CGFloat y = -labelPadding;
 
-    for (NSString *title in _viewModel.titles) {
+    for (NSString *title in _output.titles) {
         UIButton *button = [self createButton:title];
         [self setConstraintForButton:button x:&x y:&y];
     }
 }
 
 - (UIButton *)createButton:(NSString *)title {
-    UIButton *button = [UIButton buttonWithType: UIButtonTypeSystem];
-    [button setTitle: title forState: UIControlStateNormal];
-    button.titleLabel.font = [UIFont systemFontOfSize: buttonFontSize];
+    CalculatorButton *button = [[CalculatorButton alloc] initWithTitle:title];
+    [button addTarget: self action: @selector(buttonPressed:) forControlEvents: UIControlEventTouchUpInside];
     button.layer.cornerRadius = buttonStandartSize / 2;
-    [button addTarget: self action: @selector(buttonTapped:) forControlEvents: UIControlEventTouchUpInside];
-    [self.view addSubview:button];
     [self.buttons addObject:button];
-    [self setColorForButton: button];
     return button;
-}
-
-- (void)setColorForButton:(UIButton *)button
-{
-    [button setTitleColor:[UIColor whiteColor] forState: UIControlStateNormal];
-    NSString *title = button.currentTitle;
-    if ([title isEqualToString:@"+"] ||
-        [title isEqualToString:@"−"] ||
-        [title isEqualToString:@"×"] ||
-        [title isEqualToString:@"÷"] ||
-        [title isEqualToString:@"="]) {
-        button.backgroundColor = [UIColor orangeColor];
-    } else if ([title isEqualToString:@"AC"] ||
-               [title isEqualToString:@"±"] ||
-               [title isEqualToString:@"%"]) {
-        button.backgroundColor = [UIColor lightGrayColor];
-        [button setTitleColor:[UIColor blackColor] forState: UIControlStateNormal];
-    } else {
-        button.backgroundColor = [UIColor darkGrayColor];
-    }
 }
 
 - (void)setConstraintForButton:(UIButton *)button x:(CGFloat *)x y:(CGFloat *)y {
@@ -125,6 +117,7 @@
     CGFloat buttonWidth = buttonStandartSize;
     CGFloat spacing = buttonSpacing;
 
+    [self.view addSubview:button];
     button.translatesAutoresizingMaskIntoConstraints = NO;
 
     if ([button.currentTitle isEqualToString:@"0"]) {
@@ -145,5 +138,6 @@
         *y -= buttonWidth + spacing;
     }
 }
+
 
 @end

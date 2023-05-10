@@ -14,6 +14,7 @@
 		1100F69C29FC10DC009A64C8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1100F69B29FC10DC009A64C8 /* main.m */; };
 		1123E5582A0585CE0091AACC /* CalculatorViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1123E5572A0585CE0091AACC /* CalculatorViewModel.m */; };
 		113225FD2A0589E5005515C1 /* CalculatorBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 113225FC2A0589E5005515C1 /* CalculatorBuilder.m */; };
+		11F81CD42A0BAABA00CF177B /* CalculatorButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 11F81CD32A0BAABA00CF177B /* CalculatorButton.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,8 +29,13 @@
 		1100F69B29FC10DC009A64C8 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		1123E5562A0583BE0091AACC /* CalculatorViewModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CalculatorViewModel.h; sourceTree = "<group>"; };
 		1123E5572A0585CE0091AACC /* CalculatorViewModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CalculatorViewModel.m; sourceTree = "<group>"; };
+		112D71572A0A947B00DC7B2D /* CalculatorViewInput.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CalculatorViewInput.h; sourceTree = "<group>"; };
+		112D71582A0A97A800DC7B2D /* CalculatorViewOutput.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CalculatorViewOutput.h; sourceTree = "<group>"; };
 		113225FB2A05894D005515C1 /* CalculatorBuilder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CalculatorBuilder.h; sourceTree = "<group>"; };
 		113225FC2A0589E5005515C1 /* CalculatorBuilder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CalculatorBuilder.m; sourceTree = "<group>"; };
+		11F81CC72A0BA86200CF177B /* CalculatorButtonType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CalculatorButtonType.h; sourceTree = "<group>"; };
+		11F81CD22A0BAA4200CF177B /* CalculatorButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CalculatorButton.h; sourceTree = "<group>"; };
+		11F81CD32A0BAABA00CF177B /* CalculatorButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CalculatorButton.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,9 +90,10 @@
 		1100F6A329FC1705009A64C8 /* Module */ = {
 			isa = PBXGroup;
 			children = (
+				11F81CC62A0BA84200CF177B /* Model */,
 				1123E5592A05875F0091AACC /* Builder */,
 				1123E5552A0582FB0091AACC /* ViewModel */,
-				1100F6B129FC1E2A009A64C8 /* Controller */,
+				1100F6B129FC1E2A009A64C8 /* View */,
 			);
 			path = Module;
 			sourceTree = "<group>";
@@ -99,13 +106,16 @@
 			path = Resource;
 			sourceTree = "<group>";
 		};
-		1100F6B129FC1E2A009A64C8 /* Controller */ = {
+		1100F6B129FC1E2A009A64C8 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				11F81CD12A0BAA3A00CF177B /* Subview */,
+				112D71582A0A97A800DC7B2D /* CalculatorViewOutput.h */,
+				112D71572A0A947B00DC7B2D /* CalculatorViewInput.h */,
 				1100F68F29FC10DA009A64C8 /* CalculatorViewController.h */,
 				1100F69029FC10DA009A64C8 /* CalculatorViewController.m */,
 			);
-			path = Controller;
+			path = View;
 			sourceTree = "<group>";
 		};
 		1123E5552A0582FB0091AACC /* ViewModel */ = {
@@ -124,6 +134,23 @@
 				113225FC2A0589E5005515C1 /* CalculatorBuilder.m */,
 			);
 			path = Builder;
+			sourceTree = "<group>";
+		};
+		11F81CC62A0BA84200CF177B /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				11F81CC72A0BA86200CF177B /* CalculatorButtonType.h */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		11F81CD12A0BAA3A00CF177B /* Subview */ = {
+			isa = PBXGroup;
+			children = (
+				11F81CD22A0BAA4200CF177B /* CalculatorButton.h */,
+				11F81CD32A0BAABA00CF177B /* CalculatorButton.m */,
+			);
+			path = Subview;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -197,6 +224,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1100F69129FC10DA009A64C8 /* CalculatorViewController.m in Sources */,
+				11F81CD42A0BAABA00CF177B /* CalculatorButton.m in Sources */,
 				1100F68B29FC10DA009A64C8 /* AppDelegate.m in Sources */,
 				1123E5582A0585CE0091AACC /* CalculatorViewModel.m in Sources */,
 				1100F69C29FC10DC009A64C8 /* main.m in Sources */,

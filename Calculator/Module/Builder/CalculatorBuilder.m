@@ -9,7 +9,9 @@
 
 + (UIViewController *)build {
     CalculatorViewModel *viewModel = [[CalculatorViewModel alloc] init];
-    CalculatorViewController *viewController = [[CalculatorViewController alloc] initWithViewModel:viewModel];
+    CalculatorViewController *viewController = [[CalculatorViewController alloc] init];
+    viewModel.view = viewController;
+    viewController.output = viewModel;
 
     return viewController;
 }
