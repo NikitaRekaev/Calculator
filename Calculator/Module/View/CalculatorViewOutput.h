@@ -13,5 +13,6 @@
 - (void)percentButtonPressed:(NSString *)value;
 - (void)negateButtonPressed:(NSString *)value;
 - (void)clearButtonPressed:(NSString *)value;
+- (void)resultButtonPressed:(NSString *)value;
 
 @end

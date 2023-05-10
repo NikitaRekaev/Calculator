@@ -3,6 +3,7 @@
 
 #import "CalculatorButton.h"
 
+
 #pragma mark - Constants
 
 #define buttonFontSize 36
@@ -28,9 +29,10 @@
     [super setSelected:selected];
     if (self.type == CalculatorButtonTypeOperation) {
         [self setTitleColor:selected ? UIColor.orangeColor : UIColor.whiteColor forState:UIControlStateNormal];
-        self.backgroundColor = selected ? UIColor.whiteColor : UIColor.orangeColor;
+        self.backgroundColor = selected ? [UIColor whiteColor] : [UIColor orangeColor];
     }
 }
+
 
 #pragma mark - Private methods
 
@@ -38,8 +40,7 @@
     if ([_title isEqualToString:@"+"] ||
         [_title isEqualToString:@"−"] ||
         [_title isEqualToString:@"×"] ||
-        [_title isEqualToString:@"÷"] ||
-        [_title isEqualToString:@"="]) {
+        [_title isEqualToString:@"÷"]) {
         return CalculatorButtonTypeOperation;
     } else if ([_title isEqualToString:@"AC"]) {
         return CalculatorButtonTypeClear;
@@ -47,6 +48,8 @@
         return CalculatorButtonTypeNegate;
     } else if ([_title isEqualToString:@"%"]) {
         return CalculatorButtonTypePercent;
+    } else if ([_title isEqualToString:@"="]) {
+        return CalculatorButtonTypeResult;
     } else {
         return CalculatorButtonTypeNumber;
     }
@@ -60,19 +63,23 @@
 
 - (void)setColor {
     switch (_type) {
+        case CalculatorButtonTypeResult:
         case CalculatorButtonTypeOperation:
             [self setTitleColor:[UIColor whiteColor] forState: UIControlStateNormal];
             self.backgroundColor = [UIColor orangeColor];
             break;
         case CalculatorButtonTypeNumber:
             [self setTitleColor:[UIColor whiteColor] forState: UIControlStateNormal];
+            [self setTitleColor:[UIColor lightGrayColor] forState: UIControlStateHighlighted];
             self.backgroundColor = [UIColor darkGrayColor];
             break;
         default:
             [self setTitleColor:[UIColor blackColor] forState: UIControlStateNormal];
+            [self setTitleColor:[UIColor darkGrayColor] forState: UIControlStateHighlighted];
             self.backgroundColor = [UIColor lightGrayColor];
             break;
     }
 }
+
 
 @end

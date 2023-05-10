@@ -40,6 +40,19 @@
 #pragma mark - View input
 
 - (void)updateValue:(NSString *)value {
+    switch ([value length]) {
+        case 7:
+            _outputLabel.font = [UIFont systemFontOfSize: labelFontSize - 6];
+            break;
+        case 8:
+            _outputLabel.font = [UIFont systemFontOfSize: labelFontSize - 12];
+            break;
+        case 9:
+            _outputLabel.font = [UIFont systemFontOfSize: labelFontSize - 18];
+            break;
+        default:
+            _outputLabel.font = [UIFont systemFontOfSize: labelFontSize];
+    }
     _outputLabel.text = value;
 }
 
@@ -52,6 +65,7 @@
             [_output numberButtonPressed:sender.currentTitle];
             break;
         case CalculatorButtonTypeOperation:
+            [self highlightButton:sender];
             [_output operatorButtonPressed:sender.currentTitle];
             break;
         case CalculatorButtonTypePercent:
@@ -61,7 +75,12 @@
             [_output negateButtonPressed:sender.currentTitle];
             break;
         case CalculatorButtonTypeClear:
+            [self highlightButton:sender];
             [_output clearButtonPressed:sender.currentTitle];
+            break;
+        case CalculatorButtonTypeResult:
+            [self highlightButton:sender];
+            [_output resultButtonPressed:sender.currentTitle];
             break;
     }
 }
@@ -137,6 +156,13 @@
         *x = spacing;
         *y -= buttonWidth + spacing;
     }
+}
+
+- (void)highlightButton:(CalculatorButton *)sender {
+    for (CalculatorButton *button in _buttons) {
+        [button setSelected:false];
+    }
+    [sender setSelected:true];
 }
 
 

@@ -14,6 +14,7 @@
 @interface CalculatorViewModel ()
 
 @property (nonatomic, strong) NSString *outputString;
+@property (nonatomic, assign) BOOL isNegative;
 @property (nonatomic, strong) NSString *firstValue;
 @property (nonatomic, strong) NSString *secondValue;
 @property char operator;
@@ -34,42 +35,76 @@
 
 - (void)didLoadView {
     _outputString = @"0";
+    _isNegative = NO;
 }
 
 - (void)numberButtonPressed:(NSString *)value {
-    if (_outputString.length >= 6) {
+    if (_outputString.length >= 9 || ([value isEqualToString:@"."] && [_outputString containsString:@"."])) {
         return;
     }
 
-    _outputString = [_outputString  isEqual: @"0"] ? _outputString = value : [_outputString stringByAppendingString:value];
-
-    if (!_operator) {
-        _firstValue = _outputString;
+    if ([_outputString isEqualToString:@"0"] && ![value isEqualToString:@"."]) {
+        _outputString = value;
+    } else {
+        _outputString = [_outputString stringByAppendingString:value];
     }
-    
+
+    if (_operator == 0) {
+        _firstValue = _outputString;
+    } else {
+        _secondValue = _outputString;
+        _outputString = _secondValue;
+    }
+
     [_view updateValue:_outputString];
 }
 
 - (void)operatorButtonPressed:(NSString *)value {
-    if ([value isEqualToString:@"="]) {
-        [self calculate];
-        [_view updateValue:_outputString];
+    if ([value  isEqual: @"+"]) {
+        _operator = '+';
+    } else if ([value  isEqual: @"−"]) {
+        _operator = '-';
+    } else if ([value  isEqual: @"×"]) {
+        _operator = '*';
+    } else if ([value  isEqual: @"÷"]) {
+        _operator = '/';
     }
-    _operator = *strdup([value UTF8String]);
+
+    _outputString = @"";
 }
 
 - (void)percentButtonPressed:(NSString *)value {
-    _outputString = [NSString stringWithFormat:@"%f", [_outputString floatValue] * 0.01];
+    _outputString = [NSString stringWithFormat:@"%.4g", [_outputString floatValue] * 0.01];
     [_view updateValue:_outputString];
 }
 
 - (void)negateButtonPressed:(NSString *)value {
-    _outputString = [@"−" stringByAppendingString:_outputString];
+    if ([_outputString isEqualToString:@"0"] || [_outputString isEqualToString:@""]) {
+        return;
+    }
+
+    if (_isNegative) {
+        _outputString = [_outputString substringFromIndex:1];
+        _isNegative = NO;
+    } else {
+        _outputString = [@"−" stringByAppendingString:_outputString];
+        _isNegative = YES;
+    }
+
     [_view updateValue:_outputString];
 }
 
 - (void)clearButtonPressed:(NSString *)value {
+    _isNegative = NO;
+    _firstValue = nil;
+    _secondValue = nil;
+    _operator = 0;
     _outputString = @"0";
+    [_view updateValue:_outputString];
+}
+
+- (void)resultButtonPressed:(NSString *)value {
+    [self calculate];
     [_view updateValue:_outputString];
 }
 
@@ -77,16 +112,28 @@
 #pragma mark - Private methods
 
 - (void)calculate {
+    float value = 0.0;
     switch (_operator) {
         case '+':
-            _secondValue = _outputString;
-            _outputString = [NSString stringWithFormat:@"%f.1",[_firstValue floatValue] + [_secondValue floatValue]];
-            _outputString = [_outputString substringWithRange:NSMakeRange(0, [_outputString rangeOfString:@"."].location + 2)];
+            value = [_firstValue floatValue] + [_secondValue floatValue];
+            break;
+        case '-':
+            value = [_firstValue floatValue] - [_secondValue floatValue];
+            break;
+        case '*':
+            value = [_firstValue floatValue] * [_secondValue floatValue];
+            break;
+        case '/':
+            value = [_firstValue floatValue] / [_secondValue floatValue];
+            break;
         default:
             break;
     }
-    _operator = !_operator;
-    [_view updateValue:_outputString];
+    
+    _outputString = [NSString stringWithFormat:@"%.4g", value];;
+    _firstValue = _outputString;
+    _secondValue = nil;
+    _operator = 0;
 }
 
 @end
