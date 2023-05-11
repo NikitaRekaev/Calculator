@@ -1,7 +1,6 @@
 //  ViewModel.h
 //  Nikita Rekaev 05.05.2023
 
-#import "Foundation/Foundation.h"
 #import "CalculatorViewInput.h"
 #import "CalculatorViewOutput.h"
 

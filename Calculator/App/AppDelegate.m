@@ -17,8 +17,10 @@
 }
 
 - (void)configureUserInterface {
+    CalculatorBuilder *builder = [[CalculatorBuilder alloc] init];
+    
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    self.window.rootViewController = [CalculatorBuilder build];
+    self.window.rootViewController = [builder build];
     [self.window makeKeyAndVisible];
 }
 

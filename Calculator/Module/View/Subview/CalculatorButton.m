@@ -9,6 +9,15 @@
 #define fontSize 36
 #define rectForSquare CGRectMake(0.0f, 0.0f, 100.0f, 100.0f)
 #define rectForRectangular CGRectMake(0.0f, 0.0f, 100.0f, 50.0f)
+#define zeroString @"0"
+#define plus @"+"
+#define minus @"−"
+#define multiply @"×"
+#define divide @"÷"
+#define clear @"AC"
+#define negate @"±"
+#define percent @"%"
+#define result @"="
 
 
 @implementation CalculatorButton
@@ -20,7 +29,7 @@
     if (self) {
         _title = title;
         _type = [self setType];
-        [self setViewAppearance];
+        [self setAppearance];
     }
     return self;
 }
@@ -29,7 +38,7 @@
 
 - (void)setSelected:(BOOL)selected {
     [super setSelected:selected];
-    if (self.type == CalculatorButtonTypeOperation) {
+    if (_type == CalculatorButtonTypeOperation) {
         [self setTitleColor:selected ? UIColor.orangeColor : UIColor.whiteColor forState:UIControlStateNormal];
         [self setBackgroundColor:selected ? [UIColor whiteColor] : [UIColor orangeColor] forState:UIControlStateNormal];
     }
@@ -39,25 +48,25 @@
 #pragma mark - Private methods
 
 - (CalculatorButtonType)setType {
-    if ([_title isEqualToString:@"+"] ||
-        [_title isEqualToString:@"−"] ||
-        [_title isEqualToString:@"×"] ||
-        [_title isEqualToString:@"÷"]) {
+    if ([_title isEqualToString:plus] ||
+        [_title isEqualToString:minus] ||
+        [_title isEqualToString:multiply] ||
+        [_title isEqualToString:divide]) {
         return CalculatorButtonTypeOperation;
-    } else if ([_title isEqualToString:@"AC"]) {
+    } else if ([_title isEqualToString:clear]) {
         return CalculatorButtonTypeClear;
-    } else if ([_title isEqualToString:@"±"]) {
+    } else if ([_title isEqualToString:negate]) {
         return CalculatorButtonTypeNegate;
-    } else if ([_title isEqualToString:@"%"]) {
+    } else if ([_title isEqualToString:percent]) {
         return CalculatorButtonTypePercent;
-    } else if ([_title isEqualToString:@"="]) {
+    } else if ([_title isEqualToString:result]) {
         return CalculatorButtonTypeResult;
     } else {
         return CalculatorButtonTypeNumber;
     }
 }
 
-- (void)setViewAppearance {
+- (void)setAppearance {
     [self setTitle: _title forState: UIControlStateNormal];
     self.titleLabel.font = [UIFont systemFontOfSize:fontSize];
     [self setColor];
@@ -85,7 +94,7 @@
 }
 
 - (void)setBackgroundColor:(UIColor *)color forState:(UIControlState)state {
-    CGRect rect = [_title  isEqual: @"0"] ? rectForRectangular : rectForSquare;
+    CGRect rect = [_title  isEqual: zeroString] ? rectForRectangular : rectForSquare;
     CGFloat cornerRadius = rect.size.height / 2.0f;
     UIGraphicsBeginImageContextWithOptions(rect.size, NO, 0.0);
     CGContextRef context = UIGraphicsGetCurrentContext();

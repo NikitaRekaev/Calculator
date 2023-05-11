@@ -42,6 +42,7 @@
     return self;
 }
 
+
 #pragma mark - View Output
 
 - (void)didLoadView {
@@ -55,7 +56,6 @@
     [_view updateValue:_outputString];
 }
 
-
 - (void)operatorButtonPressed:(NSString *)value {
     _operator = value;
     _isNegative = NO;
@@ -68,10 +68,6 @@
 }
 
 - (void)negateButtonPressed:(NSString *)value {
-    if ([_outputString isEqualToString:zeroString] || [_outputString isEqualToString:emptyString]) {
-        return;
-    }
-
     [self setIsNegative];
     [_view updateValue:_outputString];
 }
@@ -91,13 +87,23 @@
 #pragma mark - Private methods
 
 - (void)configureOutputString:(NSString *)value {
-    if (_outputString.length >= maxLength || ([value isEqualToString:dotString] && [_outputString containsString:dotString])) {
+    if ([self isCorrectValue:value]) {
         return;
-    } else if ([_outputString isEqualToString:zeroString] && ![value isEqualToString:dotString]) {
+    } else if ([self isStartValue:value]) {
         _outputString = value;
     } else {
         _outputString = [_outputString stringByAppendingString:value];
     }
+}
+
+- (BOOL)isCorrectValue:(NSString *)value {
+    return (_outputString.length >= maxLength ||
+            ([value isEqualToString:dotString] && [_outputString containsString:dotString]));
+}
+
+- (BOOL)isStartValue:(NSString *)value {
+    return (([_outputString isEqualToString:zeroString] && ![value isEqualToString:dotString]) ||
+            [_outputString isEqualToString:errorText]);
 }
 
 - (void)updateValue:(NSString *)value {
@@ -110,7 +116,9 @@
 }
 
 - (void)setIsNegative {
-    if (_isNegative) {
+    if ([_outputString isEqualToString:zeroString] || [_outputString isEqualToString:emptyString]) {
+        return;
+    } else if (_isNegative) {
         _outputString = [_outputString substringFromIndex:1];
         _isNegative = NO;
     } else {

@@ -3,10 +3,11 @@
 
 #import <UIKit/UIKit.h>
 
-@class CalculatorViewModel;
+#import "CalculatorViewModel.h"
+#import "CalculatorViewController.h"
 
 @interface CalculatorBuilder : NSObject
 
-+ (UIViewController *)build;
+- (UIViewController *)build;
 
 @end

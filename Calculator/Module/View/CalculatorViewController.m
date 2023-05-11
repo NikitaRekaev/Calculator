@@ -9,8 +9,8 @@
 #define buttonStandartSize self.view.frame.size.width / 4.7
 #define buttonSpacing  10
 #define labelMaxFontSize 72
-#define labelMinFontSize 42
-#define labelFontSizeDelta 4
+#define labelMinFontSize 36
+#define labelFontSizeDelta 5
 #define lengthForMaxFontSize 6
 #define lengthForMinFontSize 15
 #define labelPadding 30
@@ -40,6 +40,7 @@
     [self configureOutputLabel];
     [_output didLoadView];
 }
+
 
 #pragma mark - View input
 
@@ -167,6 +168,5 @@
     }
     [sender setSelected:true];
 }
-
 
 @end
