@@ -39,11 +39,11 @@
 }
 
 - (void)numberButtonPressed:(NSString *)value {
-    if (_outputString.length >= 9 || ([value isEqualToString:@"."] && [_outputString containsString:@"."])) {
+    if (_outputString.length >= 9 || ([value isEqualToString:@","] && [_outputString containsString:@","])) {
         return;
     }
 
-    if ([_outputString isEqualToString:@"0"] && ![value isEqualToString:@"."]) {
+    if ([_outputString isEqualToString:@"0"] && ![value isEqualToString:@","]) {
         _outputString = value;
     } else {
         _outputString = [_outputString stringByAppendingString:value];
@@ -53,11 +53,11 @@
         _firstValue = _outputString;
     } else {
         _secondValue = _outputString;
-        _outputString = _secondValue;
     }
 
     [_view updateValue:_outputString];
 }
+
 
 - (void)operatorButtonPressed:(NSString *)value {
     if ([value  isEqual: @"+"]) {
@@ -70,11 +70,12 @@
         _operator = '/';
     }
 
+    _isNegative = NO;
     _outputString = @"";
 }
 
 - (void)percentButtonPressed:(NSString *)value {
-    _outputString = [NSString stringWithFormat:@"%.4g", [_outputString floatValue] * 0.01];
+    _outputString = [NSString stringWithFormat:@"%.9g", [_outputString floatValue] * 0.01];
     [_view updateValue:_outputString];
 }
 
@@ -112,25 +113,38 @@
 #pragma mark - Private methods
 
 - (void)calculate {
-    float value = 0.0;
+    double value = 0.0;
     switch (_operator) {
         case '+':
-            value = [_firstValue floatValue] + [_secondValue floatValue];
+            value = [_firstValue doubleValue] + [_secondValue doubleValue];
             break;
         case '-':
-            value = [_firstValue floatValue] - [_secondValue floatValue];
+            value = [_firstValue doubleValue] - [_secondValue doubleValue];
             break;
         case '*':
-            value = [_firstValue floatValue] * [_secondValue floatValue];
+            value = [_firstValue doubleValue] * [_secondValue doubleValue];
             break;
         case '/':
-            value = [_firstValue floatValue] / [_secondValue floatValue];
+            if ([_secondValue doubleValue] == 0.0) {
+                value = NAN;
+            } else {
+                value = [_firstValue doubleValue] / [_secondValue doubleValue];
+            }
             break;
         default:
             break;
     }
-    
-    _outputString = [NSString stringWithFormat:@"%.4g", value];;
+
+    if (isnan(value) || isinf(value)) {
+        _outputString = @"Error";
+    } else {
+        _outputString = [NSString stringWithFormat:@"%.9g", value];
+    }
+
+    if (_isNegative) {
+        _outputString = [@"−" stringByAppendingString:_outputString];
+    }
+
     _firstValue = _outputString;
     _secondValue = nil;
     _operator = 0;

@@ -40,18 +40,17 @@
 #pragma mark - View input
 
 - (void)updateValue:(NSString *)value {
-    switch ([value length]) {
-        case 7:
-            _outputLabel.font = [UIFont systemFontOfSize: labelFontSize - 6];
-            break;
-        case 8:
-            _outputLabel.font = [UIFont systemFontOfSize: labelFontSize - 12];
-            break;
-        case 9:
-            _outputLabel.font = [UIFont systemFontOfSize: labelFontSize - 18];
-            break;
-        default:
-            _outputLabel.font = [UIFont systemFontOfSize: labelFontSize];
+    CGFloat maxFontSize = 72.0;
+    CGFloat minFontSize = 42.0;
+    CGFloat fontSizeDelta = 4.0;
+    if ([value length] <= 5) {
+        _outputLabel.font = [UIFont systemFontOfSize:maxFontSize];
+    } else if ([value length] > 15) {
+        _outputLabel.font = [UIFont systemFontOfSize:minFontSize];
+    } else {
+        CGFloat fontSize = maxFontSize - (CGFloat)([value length] - 6) * fontSizeDelta;
+        fontSize = fmaxf(fontSize, minFontSize);
+        _outputLabel.font = [UIFont systemFontOfSize:fontSize];
     }
     _outputLabel.text = value;
 }
