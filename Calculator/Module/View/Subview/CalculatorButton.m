@@ -6,7 +6,9 @@
 
 #pragma mark - Constants
 
-#define buttonFontSize 36
+#define fontSize 36
+#define rectForSquare CGRectMake(0.0f, 0.0f, 100.0f, 100.0f)
+#define rectForRectangular CGRectMake(0.0f, 0.0f, 100.0f, 50.0f)
 
 
 @implementation CalculatorButton
@@ -57,7 +59,7 @@
 
 - (void)setViewAppearance {
     [self setTitle: _title forState: UIControlStateNormal];
-    self.titleLabel.font = [UIFont systemFontOfSize:buttonFontSize];
+    self.titleLabel.font = [UIFont systemFontOfSize:fontSize];
     [self setColor];
 }
 
@@ -83,7 +85,7 @@
 }
 
 - (void)setBackgroundColor:(UIColor *)color forState:(UIControlState)state {
-    CGRect rect = [_title  isEqual: @"0"] ? CGRectMake(0.0f, 0.0f, 100.0f, 50.0f) : CGRectMake(0.0f, 0.0f, 100.0f, 100.0f);
+    CGRect rect = [_title  isEqual: @"0"] ? rectForRectangular : rectForSquare;
     CGFloat cornerRadius = rect.size.height / 2.0f;
     UIGraphicsBeginImageContextWithOptions(rect.size, NO, 0.0);
     CGContextRef context = UIGraphicsGetCurrentContext();
