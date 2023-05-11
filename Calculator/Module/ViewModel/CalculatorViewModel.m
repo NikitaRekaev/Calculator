@@ -1,4 +1,4 @@
-//  ViewModel.m
+//  CalculatorViewModel.m
 //  Nikita Rekaev 05.05.2023
 
 #import "CalculatorViewModel.h"
@@ -7,13 +7,15 @@
 #pragma mark - Constants
 
 #define buttonTitles @[@"0", @".", @"=", @"1", @"2", @"3", @"+", @"4", @"5", @"6", @"−", @"7", @"8", @"9", @"×", @"AC", @"±", @"%", @"÷"]
-#define plusString buttonTitles[6]
-#define minusString buttonTitles[10]
-#define multiplyString buttonTitles[14]
-#define divideString buttonTitles[18]
+#define plusTitle buttonTitles[6]
+#define minusTitle buttonTitles[10]
+#define multiplyTitle buttonTitles[14]
+#define divideTitle buttonTitles[18]
 #define errorText @"Error"
 #define formatString @"%.9g"
 #define emptyString @""
+#define minusString @"-"
+#define minusChar '-'
 #define dotString buttonTitles[1]
 #define zeroString buttonTitles[0]
 #define zeroNumber 0
@@ -25,10 +27,9 @@
 @interface CalculatorViewModel ()
 
 @property (nonatomic, strong) NSString *outputString;
-@property (nonatomic) BOOL isNegative;
+@property (nonatomic, strong) NSString* operator;
 @property double firstValue;
 @property double secondValue;
-@property NSString* operator;
 
 @end
 
@@ -47,7 +48,6 @@
 
 - (void)didLoadView {
     _outputString = zeroString;
-    _isNegative = NO;
 }
 
 - (void)numberButtonPressed:(NSString *)value {
@@ -58,7 +58,6 @@
 
 - (void)operatorButtonPressed:(NSString *)value {
     _operator = value;
-    _isNegative = NO;
     _outputString = emptyString;
 }
 
@@ -68,7 +67,8 @@
 }
 
 - (void)negateButtonPressed:(NSString *)value {
-    [self setIsNegative];
+    [self setNegative];
+    [self updateValue:_outputString];
     [_view updateValue:_outputString];
 }
 
@@ -115,49 +115,45 @@
     }
 }
 
-- (void)setIsNegative {
+- (void)setNegative {
     if ([_outputString isEqualToString:zeroString] || [_outputString isEqualToString:emptyString]) {
         return;
-    } else if (_isNegative) {
+    } else if ([_outputString characterAtIndex:zeroNumber] == minusChar) {
         _outputString = [_outputString substringFromIndex:1];
-        _isNegative = NO;
     } else {
         _outputString = [minusString stringByAppendingString:_outputString];
-        _isNegative = YES;
     }
 }
 
 - (double)calculate {
-    if ([_operator isEqual: plusString]) {
+    if ([_operator isEqual: plusTitle]) {
         return _firstValue + _secondValue;
-    } else if ([_operator isEqual: minusString]) {
+    } else if ([_operator isEqual: minusTitle]) {
         return _firstValue - _secondValue;
-    } else if ([_operator isEqual: multiplyString]) {
+    } else if ([_operator isEqual: multiplyTitle]) {
         return _firstValue * _secondValue;
-    } else if ([_operator isEqual: divideString]) {
-            return _firstValue / _secondValue;
+    } else if ([_operator isEqual: divideTitle]) {
+        return _firstValue / _secondValue;
     }
     return NAN;
 }
 
 - (void)setResult:(double)value {
-    if (isnan(value) || isinf(value)) {
-        _outputString = errorText;
-    } else {
-        _outputString = [NSString stringWithFormat:formatString, value];
-    }
-
-    if (_isNegative) {
-        _outputString = [minusString stringByAppendingString:_outputString];
-    }
-
+    [self configureOutputAfterCalculate:value];
     _firstValue = value;
     _secondValue = zeroNumber;
     _operator = emptyString;
 }
 
+- (void)configureOutputAfterCalculate:(double)value {
+    if (isnan(value) || isinf(value)) {
+        _outputString = errorText;
+    } else {
+        _outputString = [NSString stringWithFormat:formatString, value];
+    }
+}
+
 - (void)clear {
-    _isNegative = NO;
     _firstValue = zeroNumber;
     _secondValue = zeroNumber;
     _operator = emptyString;

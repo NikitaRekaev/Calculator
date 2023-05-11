@@ -1,4 +1,4 @@
-//  ViewModel.h
+//  CalculatorViewModel.h
 //  Nikita Rekaev 05.05.2023
 
 #import "CalculatorViewInput.h"

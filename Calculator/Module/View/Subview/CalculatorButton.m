@@ -11,7 +11,7 @@
 #define rectForRectangular CGRectMake(0.0f, 0.0f, 100.0f, 50.0f)
 #define zeroString @"0"
 #define plus @"+"
-#define minus @"−"
+#define minus @"−" 
 #define multiply @"×"
 #define divide @"÷"
 #define clear @"AC"
