@@ -8,7 +8,11 @@
 
 #define buttonStandartSize self.view.frame.size.width / 4.7
 #define buttonSpacing  10
-#define labelFontSize 72
+#define labelMaxFontSize 72
+#define labelMinFontSize 42
+#define labelFontSizeDelta 4
+#define lengthForMaxFontSize 6
+#define lengthForMinFontSize 15
 #define labelPadding 30
 #define labelBottom 20
 #define labelHeight 60
@@ -40,15 +44,15 @@
 #pragma mark - View input
 
 - (void)updateValue:(NSString *)value {
-    CGFloat maxFontSize = 72.0;
-    CGFloat minFontSize = 42.0;
-    CGFloat fontSizeDelta = 4.0;
-    if ([value length] <= 5) {
+    CGFloat maxFontSize = labelMaxFontSize;
+    CGFloat minFontSize = labelMinFontSize;
+    CGFloat fontSizeDelta = labelFontSizeDelta;
+    if ([value length] < lengthForMaxFontSize) {
         _outputLabel.font = [UIFont systemFontOfSize:maxFontSize];
-    } else if ([value length] > 15) {
+    } else if ([value length] == lengthForMinFontSize) {
         _outputLabel.font = [UIFont systemFontOfSize:minFontSize];
     } else {
-        CGFloat fontSize = maxFontSize - (CGFloat)([value length] - 6) * fontSizeDelta;
+        CGFloat fontSize = maxFontSize - (CGFloat)([value length] - lengthForMaxFontSize) * fontSizeDelta;
         fontSize = fmaxf(fontSize, minFontSize);
         _outputLabel.font = [UIFont systemFontOfSize:fontSize];
     }
@@ -89,7 +93,7 @@
 
 - (void)configureOutputLabel {
     self.outputLabel = [[UILabel alloc] init];
-    self.outputLabel.font = [UIFont systemFontOfSize: labelFontSize];
+    self.outputLabel.font = [UIFont systemFontOfSize: labelMaxFontSize];
     self.outputLabel.textColor = [UIColor whiteColor];
     self.outputLabel.textAlignment = NSTextAlignmentRight;
     self.outputLabel.text = _output.titles.firstObject;

@@ -15,7 +15,7 @@
 
 #pragma mark - Init
 
-- (instancetype)initWithTitle: (NSString *)title {
+- (instancetype)initWithTitle:(NSString *)title {
     self = [super initWithFrame:CGRectZero];
     if (self) {
         _title = title;
