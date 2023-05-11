@@ -29,7 +29,7 @@
     [super setSelected:selected];
     if (self.type == CalculatorButtonTypeOperation) {
         [self setTitleColor:selected ? UIColor.orangeColor : UIColor.whiteColor forState:UIControlStateNormal];
-        self.backgroundColor = selected ? [UIColor whiteColor] : [UIColor orangeColor];
+        [self setBackgroundColor:selected ? [UIColor whiteColor] : [UIColor orangeColor] forState:UIControlStateNormal];
     }
 }
 
@@ -66,20 +66,38 @@
         case CalculatorButtonTypeResult:
         case CalculatorButtonTypeOperation:
             [self setTitleColor:[UIColor whiteColor] forState: UIControlStateNormal];
-            self.backgroundColor = [UIColor orangeColor];
+            [self setBackgroundColor:[UIColor orangeColor] forState:UIControlStateNormal];
+            [self setBackgroundColor:[UIColor systemOrangeColor] forState:UIControlStateHighlighted];
             break;
         case CalculatorButtonTypeNumber:
             [self setTitleColor:[UIColor whiteColor] forState: UIControlStateNormal];
-            [self setTitleColor:[UIColor lightGrayColor] forState: UIControlStateHighlighted];
-            self.backgroundColor = [UIColor darkGrayColor];
+            [self setBackgroundColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
+            [self setBackgroundColor:[UIColor systemGrayColor] forState:UIControlStateHighlighted];
             break;
         default:
             [self setTitleColor:[UIColor blackColor] forState: UIControlStateNormal];
-            [self setTitleColor:[UIColor darkGrayColor] forState: UIControlStateHighlighted];
-            self.backgroundColor = [UIColor lightGrayColor];
+            [self setBackgroundColor:[UIColor systemGrayColor] forState:UIControlStateNormal];
+            [self setBackgroundColor:[UIColor lightGrayColor] forState:UIControlStateHighlighted];
             break;
     }
 }
 
+- (void)setBackgroundColor:(UIColor *)color forState:(UIControlState)state {
+    CGRect rect = [_title  isEqual: @"0"] ? CGRectMake(0.0f, 0.0f, 100.0f, 50.0f) : CGRectMake(0.0f, 0.0f, 100.0f, 100.0f);
+    CGFloat cornerRadius = rect.size.height / 2.0f;
+    UIGraphicsBeginImageContextWithOptions(rect.size, NO, 0.0);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+
+    UIBezierPath *roundedRect = [UIBezierPath bezierPathWithRoundedRect:rect cornerRadius:cornerRadius];
+    [roundedRect addClip];
+
+    CGContextSetFillColorWithColor(context, [color CGColor]);
+    CGContextFillRect(context, rect);
+
+    UIImage *colorImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+
+    [self setBackgroundImage:colorImage forState:state];
+}
 
 @end
