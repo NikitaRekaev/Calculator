@@ -6,16 +6,14 @@
 
 #pragma mark - Constants
 
-#define buttonStandartSize self.view.frame.size.width / 4.7
-#define buttonSpacing  10
-#define labelMaxFontSize 72
-#define labelMinFontSize 36
-#define labelFontSizeDelta 5
+#define screenWidth self.view.bounds.size.width
+#define buttonSideLength screenWidth / 5
+#define buttonSpacing screenWidth / 25
+#define labelPadding buttonSpacing * 1.5
+#define labelBottom buttonSpacing / 1.75
+#define labelMinFontSize buttonSideLength / 2
+#define labelFontSizeDelta screenWidth / 84
 #define lengthForMaxFontSize 6
-#define lengthForMinFontSize 15
-#define labelPadding 30
-#define labelBottom 20
-#define labelHeight 60
 
 
 #pragma mark - Interface
@@ -45,18 +43,7 @@
 #pragma mark - View input
 
 - (void)updateValue:(NSString *)value {
-    CGFloat maxFontSize = labelMaxFontSize;
-    CGFloat minFontSize = labelMinFontSize;
-    CGFloat fontSizeDelta = labelFontSizeDelta;
-    if ([value length] < lengthForMaxFontSize) {
-        _outputLabel.font = [UIFont systemFontOfSize:maxFontSize];
-    } else if ([value length] == lengthForMinFontSize) {
-        _outputLabel.font = [UIFont systemFontOfSize:minFontSize];
-    } else {
-        CGFloat fontSize = maxFontSize - (CGFloat)([value length] - lengthForMaxFontSize) * fontSizeDelta;
-        fontSize = fmaxf(fontSize, minFontSize);
-        _outputLabel.font = [UIFont systemFontOfSize:fontSize];
-    }
+    [self setNeedFontSizeForLabel:value];
     _outputLabel.text = value;
 }
 
@@ -93,24 +80,23 @@
 #pragma mark - Configure label
 
 - (void)configureOutputLabel {
-    self.outputLabel = [[UILabel alloc] init];
-    self.outputLabel.font = [UIFont systemFontOfSize: labelMaxFontSize];
-    self.outputLabel.textColor = [UIColor whiteColor];
-    self.outputLabel.textAlignment = NSTextAlignmentRight;
-    self.outputLabel.text = _output.titles.firstObject;
+    _outputLabel = [[UILabel alloc] init];
+    _outputLabel.font = [UIFont systemFontOfSize: buttonSideLength];
+    _outputLabel.textColor = [UIColor whiteColor];
+    _outputLabel.textAlignment = NSTextAlignmentRight;
     [self setConstraintForOutputLabel];
 }
 
 - (void)setConstraintForOutputLabel {
     [self.view addSubview: self.outputLabel];
-    self.outputLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    _outputLabel.translatesAutoresizingMaskIntoConstraints = NO;
     UIButton *lastButton = [self.buttons lastObject];
 
     [NSLayoutConstraint activateConstraints:@[
-        [self.outputLabel.bottomAnchor constraintEqualToAnchor: lastButton.topAnchor constant:-labelBottom],
-        [self.outputLabel.leftAnchor constraintEqualToAnchor:self.view.leftAnchor constant:labelPadding],
-        [self.outputLabel.rightAnchor constraintEqualToAnchor:self.view.rightAnchor constant:-labelPadding],
-        [self.outputLabel.heightAnchor constraintEqualToConstant:labelHeight]
+        [_outputLabel.bottomAnchor constraintEqualToAnchor: lastButton.topAnchor constant:-labelBottom],
+        [_outputLabel.leftAnchor constraintEqualToAnchor:self.view.leftAnchor constant:labelPadding],
+        [_outputLabel.rightAnchor constraintEqualToAnchor:self.view.rightAnchor constant:-labelPadding],
+        [_outputLabel.heightAnchor constraintEqualToConstant:buttonSideLength]
     ]];
 }
 
@@ -119,7 +105,7 @@
 
 - (void)configureButtons {
     CGFloat x = buttonSpacing;
-    CGFloat y = -labelPadding;
+    CGFloat y = -buttonSpacing;
 
     for (NSString *title in _output.titles) {
         UIButton *button = [self createButton:title];
@@ -130,36 +116,42 @@
 - (UIButton *)createButton:(NSString *)title {
     CalculatorButton *button = [[CalculatorButton alloc] initWithTitle:title];
     [button addTarget: self action: @selector(buttonPressed:) forControlEvents: UIControlEventTouchUpInside];
-    button.layer.cornerRadius = buttonStandartSize / 2;
-    [self.buttons addObject:button];
+    [_buttons addObject:button];
     return button;
 }
 
 - (void)setConstraintForButton:(UIButton *)button x:(CGFloat *)x y:(CGFloat *)y {
-    CGFloat buttonHeight = buttonStandartSize;
-    CGFloat buttonWidth = buttonStandartSize;
-    CGFloat spacing = buttonSpacing;
-
     [self.view addSubview:button];
     button.translatesAutoresizingMaskIntoConstraints = NO;
 
+    CGFloat buttonWidth = buttonSideLength;
+
     if ([button.currentTitle isEqualToString:@"0"]) {
-        buttonWidth = (buttonWidth * 2) + spacing;
+        buttonWidth = (buttonWidth * 2) + buttonSpacing;
     }
 
     [NSLayoutConstraint activateConstraints:@[
         [button.widthAnchor constraintEqualToConstant: buttonWidth],
-        [button.heightAnchor constraintEqualToConstant: buttonHeight],
+        [button.heightAnchor constraintEqualToConstant: buttonSideLength],
         [button.bottomAnchor constraintEqualToAnchor: self.view.bottomAnchor constant: *y],
         [button.leftAnchor constraintEqualToAnchor: self.view.leftAnchor constant: *x],
     ]];
 
-    *x += buttonWidth + spacing;
+    *x += buttonWidth + buttonSpacing;
 
-    if (*x > self.view.bounds.size.width - buttonHeight - spacing) {
-        *x = spacing;
-        *y -= buttonWidth + spacing;
+    if (*x > screenWidth - buttonSideLength - buttonSpacing) {
+        *x = buttonSpacing;
+        *y -= buttonWidth + buttonSpacing;
     }
+}
+
+
+#pragma mark - Private methods
+
+- (void)setNeedFontSizeForLabel:(NSString *)value {
+    CGFloat fontSize = buttonSideLength - (((CGFloat)[value length] - lengthForMaxFontSize) * labelFontSizeDelta);
+    fontSize = fmaxf(fontSize, labelMinFontSize);
+    _outputLabel.font = [UIFont systemFontOfSize:fontSize];
 }
 
 - (void)highlightButton:(CalculatorButton *)sender {

@@ -48,6 +48,7 @@
 
 - (void)didLoadView {
     _outputString = zeroString;
+    [_view updateValue:_outputString];
 }
 
 - (void)numberButtonPressed:(NSString *)value {
