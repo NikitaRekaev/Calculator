@@ -26,3 +26,18 @@
         </tr>
     </tbody>
 </table>
+
+<table>
+<thead>
+        <tr>
+            <th>iPad</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                <img width="692" src="Gif/iPad.gif">
+            </td>
+        </tr>
+    </tbody>
+</table>
