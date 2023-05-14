@@ -20,6 +20,15 @@
 #define result @"="
 
 
+#pragma mark - Interface
+
+@interface CalculatorButton ()
+
+@property (nonatomic, assign) NSString* title;
+
+@end
+
+
 @implementation CalculatorButton
 
 #pragma mark - Init

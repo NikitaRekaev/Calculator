@@ -7,9 +7,6 @@
 @interface CalculatorButton : UIButton
 
 @property (nonatomic, assign) CalculatorButtonType type;
-@property (nonatomic, assign) NSString* title;
-@property (nonatomic, assign) BOOL isSelected;
-
 - (instancetype)initWithTitle: (NSString*)title;
 
 @end
