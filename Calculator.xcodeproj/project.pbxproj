@@ -43,9 +43,9 @@
 		112D71582A0A97A800DC7B2D /* CalculatorViewOutput.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CalculatorViewOutput.h; sourceTree = "<group>"; };
 		113225FB2A05894D005515C1 /* CalculatorBuilder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CalculatorBuilder.h; sourceTree = "<group>"; };
 		113225FC2A0589E5005515C1 /* CalculatorBuilder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CalculatorBuilder.m; sourceTree = "<group>"; };
-		119337542A129DB700504456 /* CalculatorTest.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CalculatorTest.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		119337542A129DB700504456 /* CalculatorTest.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = CalculatorTest.xctest; path = "/Users/nikita/Developer/Project/Calculator/build/Debug-iphoneos/CalculatorTest.xctest"; sourceTree = "<absolute>"; };
 		119337562A129DB700504456 /* CalculatorViewModelTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CalculatorViewModelTest.m; sourceTree = "<group>"; };
-		11AECB9D2A129EDF00FC7FEE /* Calculator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Calculator.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		11AECB9D2A129EDF00FC7FEE /* Calculator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = Calculator.app; path = "/Users/nikita/Developer/Project/Calculator/build/Debug-iphoneos/Calculator.app"; sourceTree = "<absolute>"; };
 		11F81CC72A0BA86200CF177B /* CalculatorButtonType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CalculatorButtonType.h; sourceTree = "<group>"; };
 		11F81CD22A0BAA4200CF177B /* CalculatorButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CalculatorButton.h; sourceTree = "<group>"; };
 		11F81CD32A0BAABA00CF177B /* CalculatorButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CalculatorButton.m; sourceTree = "<group>"; };
@@ -74,8 +74,6 @@
 			children = (
 				1100F68829FC10DA009A64C8 /* Calculator */,
 				119337552A129DB700504456 /* CalculatorTest */,
-				11AECB9D2A129EDF00FC7FEE /* Calculator.app */,
-				119337542A129DB700504456 /* CalculatorTest.xctest */,
 			);
 			sourceTree = "<group>";
 		};
