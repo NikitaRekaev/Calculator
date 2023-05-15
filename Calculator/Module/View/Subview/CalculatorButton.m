@@ -6,7 +6,7 @@
 
 #pragma mark - Constants
 
-#define fontSize 36
+#define fontSize [UIScreen mainScreen].bounds.size.width / 11.5
 #define rectForSquare CGRectMake(0.0f, 0.0f, 100.0f, 100.0f)
 #define rectForRectangular CGRectMake(0.0f, 0.0f, 100.0f, 50.0f)
 #define zeroString @"0"
