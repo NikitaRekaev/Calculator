@@ -11,9 +11,9 @@
 #define buttonSpacing screenWidth / 25
 #define labelPadding buttonSpacing * 1.5
 #define labelBottom buttonSpacing / 1.75
-#define labelMinFontSize buttonSideLength / 2
+#define labelMinFontSize buttonSideLength / 2.1
 #define labelFontSizeDelta screenWidth / 84
-#define lengthForMaxFontSize 6
+#define lengthForMaxFontSize 5
 
 
 #pragma mark - Interface
@@ -32,8 +32,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    _buttons = [NSMutableArray array];
     self.view.backgroundColor = [UIColor blackColor];
+    _buttons = [NSMutableArray array];
     [self configureButtons];
     [self configureOutputLabel];
     [_output didLoadView];
@@ -60,18 +60,18 @@
             [_output operatorButtonPressed:sender.currentTitle];
             break;
         case CalculatorButtonTypePercent:
-            [_output percentButtonPressed:sender.currentTitle];
+            [_output percentButtonPressed];
             break;
         case CalculatorButtonTypeNegate:
-            [_output negateButtonPressed:sender.currentTitle];
+            [_output negateButtonPressed];
             break;
         case CalculatorButtonTypeClear:
             [self highlightButton:sender];
-            [_output clearButtonPressed:sender.currentTitle];
+            [_output clearButtonPressed];
             break;
         case CalculatorButtonTypeResult:
             [self highlightButton:sender];
-            [_output resultButtonPressed:sender.currentTitle];
+            [_output resultButtonPressed];
             break;
     }
 }
@@ -81,7 +81,6 @@
 
 - (void)configureOutputLabel {
     _outputLabel = [[UILabel alloc] init];
-    _outputLabel.font = [UIFont systemFontOfSize: buttonSideLength];
     _outputLabel.textColor = [UIColor whiteColor];
     _outputLabel.textAlignment = NSTextAlignmentRight;
     [self setConstraintForOutputLabel];

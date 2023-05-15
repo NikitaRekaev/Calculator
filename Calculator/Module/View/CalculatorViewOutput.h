@@ -10,9 +10,9 @@
 - (void)didLoadView;
 - (void)numberButtonPressed:(NSString *)value;
 - (void)operatorButtonPressed:(NSString *)value;
-- (void)percentButtonPressed:(NSString *)value;
-- (void)negateButtonPressed:(NSString *)value;
-- (void)clearButtonPressed:(NSString *)value;
-- (void)resultButtonPressed:(NSString *)value;
+- (void)percentButtonPressed;
+- (void)negateButtonPressed;
+- (void)clearButtonPressed;
+- (void)resultButtonPressed;
 
 @end

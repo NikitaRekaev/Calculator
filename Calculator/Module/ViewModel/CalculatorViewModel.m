@@ -7,19 +7,22 @@
 #pragma mark - Constants
 
 #define buttonTitles @[@"0", @".", @"=", @"1", @"2", @"3", @"+", @"4", @"5", @"6", @"−", @"7", @"8", @"9", @"×", @"AC", @"±", @"%", @"÷"]
+#define zeroString buttonTitles[0]
+#define dotString buttonTitles[1]
 #define plusTitle buttonTitles[6]
 #define minusTitle buttonTitles[10]
 #define multiplyTitle buttonTitles[14]
 #define divideTitle buttonTitles[18]
+#define negativeZeroString [minusString stringByAppendingString:zeroString]
 #define errorText @"Error"
-#define formatString @"%.9g"
+#define outputFormat @"%.9g"
 #define emptyString @""
 #define minusString @"-"
+#define zeroWithDot @"0."
 #define minusChar '-'
-#define dotString buttonTitles[1]
-#define zeroString buttonTitles[0]
 #define zeroNumber 0
 #define maxLength 9
+#define tooLongIndicator 'e'
 
 
 #pragma mark - Interface
@@ -62,23 +65,23 @@
     _outputString = emptyString;
 }
 
-- (void)percentButtonPressed:(NSString *)value {
-    _outputString = [NSString stringWithFormat:formatString, [_outputString floatValue] * 0.01];
+- (void)percentButtonPressed {
+    [self calculatePercent];
     [_view updateValue:_outputString];
 }
 
-- (void)negateButtonPressed:(NSString *)value {
-    [self setNegative];
+- (void)negateButtonPressed {
+    [self makeValueNegative];
     [self updateValue:_outputString];
     [_view updateValue:_outputString];
 }
 
-- (void)clearButtonPressed:(NSString *)value {
+- (void)clearButtonPressed {
     [self clear];
     [_view updateValue:_outputString];
 }
 
-- (void)resultButtonPressed:(NSString *)value {
+- (void)resultButtonPressed {
     double calculatedValue = [self calculate];
     [self setResult:calculatedValue];
     [_view updateValue:_outputString];
@@ -90,6 +93,8 @@
 - (void)configureOutputString:(NSString *)value {
     if ([self isCorrectValue:value]) {
         return;
+    } else if ([value  isEqual:dotString] && [_outputString  isEqual:errorText]) {
+        _outputString = zeroWithDot;
     } else if ([self isStartValue:value]) {
         _outputString = value;
     } else {
@@ -99,24 +104,41 @@
 
 - (BOOL)isCorrectValue:(NSString *)value {
     return (_outputString.length >= maxLength ||
-            ([value isEqualToString:dotString] && [_outputString containsString:dotString]));
+    ([value isEqualToString:dotString] && [_outputString containsString:dotString]));
 }
 
 - (BOOL)isStartValue:(NSString *)value {
+    BOOL isTooLong = NO;
+
+    for (NSUInteger i = zeroNumber; i < _outputString.length; i++) {
+        unichar character = [_outputString characterAtIndex:i];
+        if (character == tooLongIndicator) {
+            isTooLong = YES;
+        }
+    }
+
     return (([_outputString isEqualToString:zeroString] && ![value isEqualToString:dotString]) ||
-            [_outputString isEqualToString:errorText]);
+            [_outputString isEqualToString:errorText] ||
+            isTooLong);
 }
 
 - (void)updateValue:(NSString *)value {
-    double selfValue = [value doubleValue];
+    double doubleValue = [value doubleValue];
     if (_operator == zeroNumber) {
-        _firstValue = selfValue;
+        _firstValue = doubleValue;
     } else {
-        _secondValue = selfValue;
+        _secondValue = doubleValue;
     }
 }
 
-- (void)setNegative {
+- (void)calculatePercent {
+    _outputString = [NSString stringWithFormat:outputFormat, [_outputString doubleValue] * 0.01];
+    if ([_outputString isEqualToString:negativeZeroString] || [_outputString isEqualToString:zeroString]) {
+        [self clear];
+    }
+}
+
+- (void)makeValueNegative {
     if ([_outputString isEqualToString:zeroString] || [_outputString isEqualToString:emptyString]) {
         return;
     } else if ([_outputString characterAtIndex:zeroNumber] == minusChar) {
@@ -140,24 +162,23 @@
 }
 
 - (void)setResult:(double)value {
+    [self clear];
     [self configureOutputAfterCalculate:value];
     _firstValue = value;
-    _secondValue = zeroNumber;
-    _operator = emptyString;
 }
 
 - (void)configureOutputAfterCalculate:(double)value {
     if (isnan(value) || isinf(value)) {
         _outputString = errorText;
     } else {
-        _outputString = [NSString stringWithFormat:formatString, value];
+        _outputString = [NSString stringWithFormat:outputFormat, value];
     }
 }
 
 - (void)clear {
     _firstValue = zeroNumber;
     _secondValue = zeroNumber;
-    _operator = emptyString;
+    _operator = NULL;
     _outputString = zeroString;
 }
 
