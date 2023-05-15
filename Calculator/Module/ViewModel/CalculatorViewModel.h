@@ -9,4 +9,9 @@
 @property (nonatomic, weak) id<CalculatorViewInput> view;
 @property (nonatomic, strong) NSArray *titles;
 
+@property (nonatomic, strong) NSString *outputString;
+@property (nonatomic, strong) NSString* operator;
+@property double firstValue;
+@property double secondValue;
+
 @end

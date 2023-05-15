@@ -25,18 +25,6 @@
 #define tooLongIndicator 'e'
 
 
-#pragma mark - Interface
-
-@interface CalculatorViewModel ()
-
-@property (nonatomic, strong) NSString *outputString;
-@property (nonatomic, strong) NSString* operator;
-@property double firstValue;
-@property double secondValue;
-
-@end
-
-
 @implementation CalculatorViewModel
 
 #pragma mark - Init
@@ -164,14 +152,15 @@
 - (void)setResult:(double)value {
     [self clear];
     [self configureOutputAfterCalculate:value];
-    _firstValue = value;
 }
 
 - (void)configureOutputAfterCalculate:(double)value {
     if (isnan(value) || isinf(value)) {
         _outputString = errorText;
+        _firstValue = zeroNumber;
     } else {
         _outputString = [NSString stringWithFormat:outputFormat, value];
+        _firstValue = value;
     }
 }
 
