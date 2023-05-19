@@ -6,25 +6,25 @@
 
 #pragma mark - Constants
 
-#define fontSize [UIScreen mainScreen].bounds.size.width / 11.5
-#define rectForSquare CGRectMake(0.0f, 0.0f, 100.0f, 100.0f)
-#define rectForRectangular CGRectMake(0.0f, 0.0f, 100.0f, 50.0f)
-#define zeroString @"0"
-#define plus @"+"
-#define minus @"−" 
-#define multiply @"×"
-#define divide @"÷"
-#define clear @"AC"
-#define negate @"±"
-#define percent @"%"
-#define result @"="
+#define FONT_SIZE ([UIScreen mainScreen].bounds.size.width / 11.5)
+#define RECT_FOR_SQUARE (CGRectMake(0.0f, 0.0f, 100.0f, 100.0f))
+#define RECT_FOR_RECTANGULAR (CGRectMake(0.0f, 0.0f, 100.0f, 50.0f))
 
+static NSString *const zeroString = @"0";
+static NSString *const plus = @"+";
+static NSString *const minus = @"−";
+static NSString *const multiply = @"×";
+static NSString *const divide = @"÷";
+static NSString *const clear = @"AC";
+static NSString *const negate = @"±";
+static NSString *const percent = @"%";
+static NSString *const result = @"=";
 
 #pragma mark - Interface
 
 @interface CalculatorButton ()
 
-@property (nonatomic, assign) NSString* title;
+@property (atomic, assign) NSString *title;
 
 @end
 
@@ -36,8 +36,8 @@
 - (instancetype)initWithTitle:(NSString *)title {
     self = [super initWithFrame:CGRectZero];
     if (self) {
-        _title = title;
-        _type = [self setType];
+        self.title = title;
+        self.type = [self setType];
         [self setAppearance];
     }
     return self;
@@ -77,7 +77,7 @@
 
 - (void)setAppearance {
     [self setTitle: _title forState: UIControlStateNormal];
-    self.titleLabel.font = [UIFont systemFontOfSize:fontSize];
+    self.titleLabel.font = [UIFont systemFontOfSize:FONT_SIZE];
     [self setColor];
 }
 
@@ -103,7 +103,7 @@
 }
 
 - (void)setBackgroundColor:(UIColor *)color forState:(UIControlState)state {
-    CGRect rect = [_title  isEqual: zeroString] ? rectForRectangular : rectForSquare;
+    CGRect rect = [_title  isEqual: zeroString] ? RECT_FOR_RECTANGULAR : RECT_FOR_SQUARE;
     CGFloat cornerRadius = rect.size.height / 2.0f;
     UIGraphicsBeginImageContextWithOptions(rect.size, NO, 0.0);
     CGContextRef context = UIGraphicsGetCurrentContext();

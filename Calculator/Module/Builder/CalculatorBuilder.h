@@ -3,7 +3,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import "CalculatorViewModel.h"
+#import "CalculatorPresenter.h"
 #import "CalculatorViewController.h"
 
 @interface CalculatorBuilder : NSObject

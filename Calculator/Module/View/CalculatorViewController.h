@@ -9,7 +9,7 @@
 
 @interface CalculatorViewController : UIViewController <CalculatorViewInput>
 
-@property (nonatomic, strong) id<CalculatorViewOutput> output;
+@property (atomic, strong) id<CalculatorViewOutput> output;
 
 - (void)updateValue:(NSString *)value;
 

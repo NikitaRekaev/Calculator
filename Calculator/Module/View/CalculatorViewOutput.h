@@ -5,7 +5,7 @@
 
 @protocol CalculatorViewOutput <NSObject>
 
-@property (nonatomic, strong) NSArray *titles;
+@property (atomic, strong) NSArray *titles;
 
 - (void)didLoadView;
 - (void)numberButtonPressed:(NSString *)value;

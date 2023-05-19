@@ -12,9 +12,9 @@
 		1100F69629FC10DC009A64C8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1100F69529FC10DC009A64C8 /* Assets.xcassets */; };
 		1100F69929FC10DC009A64C8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1100F69729FC10DC009A64C8 /* LaunchScreen.storyboard */; };
 		1100F69C29FC10DC009A64C8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1100F69B29FC10DC009A64C8 /* main.m */; };
-		1123E5582A0585CE0091AACC /* CalculatorViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1123E5572A0585CE0091AACC /* CalculatorViewModel.m */; };
+		1123E5582A0585CE0091AACC /* CalculatorPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 1123E5572A0585CE0091AACC /* CalculatorPresenter.m */; };
 		113225FD2A0589E5005515C1 /* CalculatorBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 113225FC2A0589E5005515C1 /* CalculatorBuilder.m */; };
-		119337572A129DB700504456 /* CalculatorViewModelTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 119337562A129DB700504456 /* CalculatorViewModelTest.m */; };
+		119337572A129DB700504456 /* CalculatorPresenterTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 119337562A129DB700504456 /* CalculatorPresenterTest.m */; };
 		11F81CD42A0BAABA00CF177B /* CalculatorButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 11F81CD32A0BAABA00CF177B /* CalculatorButton.m */; };
 /* End PBXBuildFile section */
 
@@ -37,15 +37,15 @@
 		1100F69829FC10DC009A64C8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1100F69A29FC10DC009A64C8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1100F69B29FC10DC009A64C8 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		1123E5562A0583BE0091AACC /* CalculatorViewModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CalculatorViewModel.h; sourceTree = "<group>"; };
-		1123E5572A0585CE0091AACC /* CalculatorViewModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CalculatorViewModel.m; sourceTree = "<group>"; };
+		1123E5562A0583BE0091AACC /* CalculatorPresenter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CalculatorPresenter.h; sourceTree = "<group>"; };
+		1123E5572A0585CE0091AACC /* CalculatorPresenter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CalculatorPresenter.m; sourceTree = "<group>"; };
 		112D71572A0A947B00DC7B2D /* CalculatorViewInput.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CalculatorViewInput.h; sourceTree = "<group>"; };
 		112D71582A0A97A800DC7B2D /* CalculatorViewOutput.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CalculatorViewOutput.h; sourceTree = "<group>"; };
 		113225FB2A05894D005515C1 /* CalculatorBuilder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CalculatorBuilder.h; sourceTree = "<group>"; };
 		113225FC2A0589E5005515C1 /* CalculatorBuilder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CalculatorBuilder.m; sourceTree = "<group>"; };
-		119337542A129DB700504456 /* CalculatorTest.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = CalculatorTest.xctest; path = "/Users/nikita/Developer/Project/Calculator/build/Debug-iphoneos/CalculatorTest.xctest"; sourceTree = "<absolute>"; };
-		119337562A129DB700504456 /* CalculatorViewModelTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CalculatorViewModelTest.m; sourceTree = "<group>"; };
-		11AECB9D2A129EDF00FC7FEE /* Calculator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = Calculator.app; path = "/Users/nikita/Developer/Project/Calculator/build/Debug-iphoneos/Calculator.app"; sourceTree = "<absolute>"; };
+		119337562A129DB700504456 /* CalculatorPresenterTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CalculatorPresenterTest.m; sourceTree = "<group>"; };
+		11B2C5802A17EC3A00DFBF6B /* Calculator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Calculator.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		11B2C5812A17EC3A00DFBF6B /* CalculatorTest.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CalculatorTest.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		11F81CC72A0BA86200CF177B /* CalculatorButtonType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CalculatorButtonType.h; sourceTree = "<group>"; };
 		11F81CD22A0BAA4200CF177B /* CalculatorButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CalculatorButton.h; sourceTree = "<group>"; };
 		11F81CD32A0BAABA00CF177B /* CalculatorButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CalculatorButton.m; sourceTree = "<group>"; };
@@ -74,6 +74,8 @@
 			children = (
 				1100F68829FC10DA009A64C8 /* Calculator */,
 				119337552A129DB700504456 /* CalculatorTest */,
+				11B2C5802A17EC3A00DFBF6B /* Calculator.app */,
+				11B2C5812A17EC3A00DFBF6B /* CalculatorTest.xctest */,
 			);
 			sourceTree = "<group>";
 		};
@@ -133,8 +135,8 @@
 		1123E5552A0582FB0091AACC /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				1123E5562A0583BE0091AACC /* CalculatorViewModel.h */,
-				1123E5572A0585CE0091AACC /* CalculatorViewModel.m */,
+				1123E5562A0583BE0091AACC /* CalculatorPresenter.h */,
+				1123E5572A0585CE0091AACC /* CalculatorPresenter.m */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -151,7 +153,7 @@
 		119337552A129DB700504456 /* CalculatorTest */ = {
 			isa = PBXGroup;
 			children = (
-				119337562A129DB700504456 /* CalculatorViewModelTest.m */,
+				119337562A129DB700504456 /* CalculatorPresenterTest.m */,
 			);
 			path = CalculatorTest;
 			sourceTree = "<group>";
@@ -190,7 +192,7 @@
 			);
 			name = Calculator;
 			productName = Calculator;
-			productReference = 11AECB9D2A129EDF00FC7FEE /* Calculator.app */;
+			productReference = 11B2C5802A17EC3A00DFBF6B /* Calculator.app */;
 			productType = "com.apple.product-type.application";
 		};
 		119337532A129DB700504456 /* CalculatorTest */ = {
@@ -208,7 +210,7 @@
 			);
 			name = CalculatorTest;
 			productName = CalculatorTest;
-			productReference = 119337542A129DB700504456 /* CalculatorTest.xctest */;
+			productReference = 11B2C5812A17EC3A00DFBF6B /* CalculatorTest.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -276,7 +278,7 @@
 				1100F69129FC10DA009A64C8 /* CalculatorViewController.m in Sources */,
 				11F81CD42A0BAABA00CF177B /* CalculatorButton.m in Sources */,
 				1100F68B29FC10DA009A64C8 /* AppDelegate.m in Sources */,
-				1123E5582A0585CE0091AACC /* CalculatorViewModel.m in Sources */,
+				1123E5582A0585CE0091AACC /* CalculatorPresenter.m in Sources */,
 				1100F69C29FC10DC009A64C8 /* main.m in Sources */,
 				113225FD2A0589E5005515C1 /* CalculatorBuilder.m in Sources */,
 			);
@@ -286,7 +288,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				119337572A129DB700504456 /* CalculatorViewModelTest.m in Sources */,
+				119337572A129DB700504456 /* CalculatorPresenterTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

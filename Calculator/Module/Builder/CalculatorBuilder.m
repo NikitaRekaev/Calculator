@@ -6,11 +6,11 @@
 @implementation CalculatorBuilder
 
 - (UIViewController *)build {
-    CalculatorViewModel *viewModel = [[CalculatorViewModel alloc] init];
+    CalculatorPresenter *presenter = [[CalculatorPresenter alloc] init];
     CalculatorViewController *viewController = [[CalculatorViewController alloc] init];
     
-    viewModel.view = viewController;
-    viewController.output = viewModel;
+    presenter.view = viewController;
+    viewController.output = presenter;
 
     return viewController;
 }

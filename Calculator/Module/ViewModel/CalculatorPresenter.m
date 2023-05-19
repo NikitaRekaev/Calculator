@@ -1,36 +1,36 @@
-//  CalculatorViewModel.m
+//  CalculatorPresenter.m
 //  Nikita Rekaev 05.05.2023
 
-#import "CalculatorViewModel.h"
+#import "CalculatorPresenter.h"
 
 
 #pragma mark - Constants
 
-#define buttonTitles @[@"0", @".", @"=", @"1", @"2", @"3", @"+", @"4", @"5", @"6", @"−", @"7", @"8", @"9", @"×", @"AC", @"±", @"%", @"÷"]
-#define zeroString buttonTitles[0]
-#define dotString buttonTitles[1]
-#define plusTitle buttonTitles[6]
-#define minusTitle buttonTitles[10]
-#define multiplyTitle buttonTitles[14]
-#define divideTitle buttonTitles[18]
-#define negativeZeroString [minusString stringByAppendingString:zeroString]
-#define errorText @"Error"
-#define outputFormat @"%.9g"
-#define emptyString @""
-#define minusString @"-"
-#define zeroWithDot @"0."
-#define minusChar '-'
-#define zeroNumber 0
-#define maxLength 9
-#define tooLongIndicator 'e'
+#define TITLES @[@"0", @".", @"=", @"1", @"2", @"3", @"+", @"4", @"5", @"6", @"−", @"7", @"8", @"9", @"×", @"AC", @"±", @"%", @"÷"]
+
+static NSString *const zeroString = @"0";
+static NSString *const negativeZeroString = @"-0";
+static NSString *const dotString = @".";
+static NSString *const plusTitle = @"+";
+static NSString *const minusTitle = @"−";
+static NSString *const multiplyTitle = @"×";
+static NSString *const divideTitle = @"÷";
+static NSString *const minusString = @"-";
+static NSString *const errorText = @"Error";
+static NSString *const outputFormat = @"%.9g";
+static NSString *const emptyString = @"";
+static NSString *const zeroWithDot = @"0.";
+static unichar const minusChar = '-';
+static NSUInteger const maxLength = 9;
+static unichar const tooLongIndicator = 'e';
 
 
-@implementation CalculatorViewModel
+@implementation CalculatorPresenter
 
 #pragma mark - Init
 
 - (instancetype)init {
-    self.titles = buttonTitles;
+    self.titles = TITLES;
     return self;
 }
 
@@ -38,7 +38,7 @@
 #pragma mark - View Output
 
 - (void)didLoadView {
-    _outputString = zeroString;
+    self.outputString = zeroString;
     [_view updateValue:_outputString];
 }
 
@@ -49,8 +49,8 @@
 }
 
 - (void)operatorButtonPressed:(NSString *)value {
-    _operator = value;
-    _outputString = emptyString;
+    self.operator = value;
+    self.outputString = emptyString;
 }
 
 - (void)percentButtonPressed {
@@ -82,11 +82,11 @@
     if ([self isCorrectValue:value]) {
         return;
     } else if ([value  isEqual:dotString] && [_outputString  isEqual:errorText]) {
-        _outputString = zeroWithDot;
+        self.outputString = zeroWithDot;
     } else if ([self isStartValue:value]) {
-        _outputString = value;
+        self.outputString = value;
     } else {
-        _outputString = [_outputString stringByAppendingString:value];
+        self.outputString = [_outputString stringByAppendingString:value];
     }
 }
 
@@ -98,7 +98,7 @@
 - (BOOL)isStartValue:(NSString *)value {
     BOOL isTooLong = NO;
 
-    for (NSUInteger i = zeroNumber; i < _outputString.length; i++) {
+    for (NSUInteger i = 0; i < _outputString.length; i++) {
         unichar character = [_outputString characterAtIndex:i];
         if (character == tooLongIndicator) {
             isTooLong = YES;
@@ -112,15 +112,15 @@
 
 - (void)updateValue:(NSString *)value {
     double doubleValue = [value doubleValue];
-    if (_operator == zeroNumber) {
-        _firstValue = doubleValue;
+    if (_operator == 0) {
+        self.firstValue = doubleValue;
     } else {
-        _secondValue = doubleValue;
+        self.secondValue = doubleValue;
     }
 }
 
 - (void)calculatePercent {
-    _outputString = [NSString stringWithFormat:outputFormat, [_outputString doubleValue] * 0.01];
+    self.outputString = [NSString stringWithFormat:outputFormat, [_outputString doubleValue] * 0.01];
     if ([_outputString isEqualToString:negativeZeroString] || [_outputString isEqualToString:zeroString]) {
         [self clear];
     }
@@ -129,10 +129,10 @@
 - (void)makeValueNegative {
     if ([_outputString isEqualToString:zeroString] || [_outputString isEqualToString:emptyString]) {
         return;
-    } else if ([_outputString characterAtIndex:zeroNumber] == minusChar) {
-        _outputString = [_outputString substringFromIndex:1];
+    } else if ([_outputString characterAtIndex:0] == minusChar) {
+        self.outputString = [_outputString substringFromIndex:1];
     } else {
-        _outputString = [minusString stringByAppendingString:_outputString];
+        self.outputString = [minusString stringByAppendingString:_outputString];
     }
 }
 
@@ -156,19 +156,19 @@
 
 - (void)configureOutputAfterCalculate:(double)value {
     if (isnan(value) || isinf(value)) {
-        _outputString = errorText;
-        _firstValue = zeroNumber;
+        self.outputString = errorText;
+        self.firstValue = 0;
     } else {
-        _outputString = [NSString stringWithFormat:outputFormat, value];
-        _firstValue = value;
+        self.outputString = [NSString stringWithFormat:outputFormat, value];
+        self.firstValue = value;
     }
 }
 
 - (void)clear {
-    _firstValue = zeroNumber;
-    _secondValue = zeroNumber;
-    _operator = NULL;
-    _outputString = zeroString;
+    self.firstValue = 0;
+    self.secondValue = 0;
+    self.operator = NULL;
+    self.outputString = zeroString;
 }
 
 @end

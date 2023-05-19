@@ -4,10 +4,6 @@
 #import "AppDelegate.h"
 #import "CalculatorBuilder.h"
 
-@interface AppDelegate ()
-
-@end
-
 
 @implementation AppDelegate
 

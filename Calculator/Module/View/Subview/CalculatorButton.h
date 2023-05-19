@@ -6,7 +6,8 @@
 
 @interface CalculatorButton : UIButton
 
-@property (nonatomic, assign) CalculatorButtonType type;
-- (instancetype)initWithTitle: (NSString*)title;
+@property (atomic, assign) CalculatorButtonType type;
+
+- (instancetype)initWithTitle: (NSString *)title;
 
 @end
