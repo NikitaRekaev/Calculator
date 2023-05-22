@@ -4,7 +4,7 @@
 * iOS 11+
 * Objective-c
 * UIKit
-* MVVM
+* MVP
 
 ## Overview
 
